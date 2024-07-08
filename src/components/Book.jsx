@@ -19,7 +19,15 @@ const Book = ({ book }) => {
 
         // la funzione dispatch ci chiede un oggetto ACTION come argomento
         // questo oggetto vuole un TYPE obbligatoriamente! e un eventuale PAYLOAD (questa volta ci servirà di sicuro per inviare il nostro book allo Store)
-        // chiamare dispatch attiva il processo di cambio di stato globale
+
+        // chiamare dispatch attiva il processo di cambio di stato globale:
+
+        // dispatch(action) ==> Store ==> Reducer(state, action) ==> nuovo State
+
+        // 1) il processo inizia con l'invio di una dispatch contenente un'azione
+        // 2) questa azione viene ricevuta dallo Store che la passa al reducer come secondo argomento, e lo stato attuale come primo
+        // 3) il reducer valuta l'action.type, capisce quale operazione dev'essere fatta grazie ad un matching-case, e infine computa il nuovo stato
+        // 4) con il nuovo stato, tutti i componenti sottoscritti a quella porzione di stato vengono ri-renderizzati
         dispatch({
           type: "SELECT_BOOK",
           payload: book

@@ -16,6 +16,9 @@ const initialState = {
   bookSelected: {
     createdAt: "08/07/2024 11:00:00",
     content: null // iniziamo con null perché content riceverà un oggetto
+  },
+  user: {
+    content: ""
   }
 };
 
@@ -69,6 +72,15 @@ const mainReducer = (state = initialState, action) => {
           //   content: [...state.cart.content.slice(0, action.payload), ...state.cart.content.slice(action.payload + 1)]
           content: state.cart.content.filter((_, i) => i !== action.payload)
           // ❌ da non usare assolutamente metodi che mutano: es. splice!
+        }
+      };
+
+    case "SET_USER":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          content: action.payload
         }
       };
     default:
