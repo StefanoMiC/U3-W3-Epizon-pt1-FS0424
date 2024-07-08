@@ -1,7 +1,11 @@
 import { Col, Row, Button, ListGroup } from "react-bootstrap";
 import { FaTrash, FaShoppingCart } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 
-const Cart = ({ cart = [] }) => {
+const Cart = () => {
+  const cart = useSelector(state => state.cart.content);
+
+  const dispatch = useDispatch();
   return (
     <div className="cart">
       <Row>
@@ -13,7 +17,12 @@ const Cart = ({ cart = [] }) => {
             {cart.length > 0 ? (
               cart.map((book, i) => (
                 <ListGroup.Item key={i}>
-                  <Button variant="danger" onClick={() => {}}>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      dispatch({ type: "REMOVE_FROM_CART", payload: i });
+                    }}
+                  >
                     <FaTrash />
                   </Button>
                   <img className="book-cover-small" src={book.imageUrl} alt="book selected" />

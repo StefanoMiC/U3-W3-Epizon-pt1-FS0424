@@ -19,6 +19,7 @@ const Book = ({ book }) => {
 
         // la funzione dispatch ci chiede un oggetto ACTION come argomento
         // questo oggetto vuole un TYPE obbligatoriamente! e un eventuale PAYLOAD (questa volta ci servirà di sicuro per inviare il nostro book allo Store)
+        // chiamare dispatch attiva il processo di cambio di stato globale
         dispatch({
           type: "SELECT_BOOK",
           payload: book

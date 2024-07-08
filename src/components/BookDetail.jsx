@@ -1,6 +1,11 @@
 import { Col, Row, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
-const BookDetail = ({ bookSelected }) => {
+const BookDetail = () => {
+  const bookSelected = useSelector(state => state.bookSelected.content);
+
+  const dispatch = useDispatch();
+
   return (
     <div className="mt-3 mb-4 mb-lg-0">
       {bookSelected ? (
@@ -25,7 +30,12 @@ const BookDetail = ({ bookSelected }) => {
                 <span className="fs-1 fw-lighter">{bookSelected.price}€</span>
               </p>
 
-              <Button color="primary" onClick={() => {}}>
+              <Button
+                color="primary"
+                onClick={() => {
+                  dispatch({ type: "ADD_TO_CART", payload: bookSelected });
+                }}
+              >
                 Aggiungi al carrello
               </Button>
             </Col>

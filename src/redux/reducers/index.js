@@ -10,6 +10,7 @@
 
 const initialState = {
   cart: {
+    // qui ci potrebbero essere altre proprietà di stato, vale la pena prevedere di mantenerle tutte
     content: [] // iniziamo con un array vuoto perché content riceverà un array dal nostro reducer
   },
   bookSelected: {
@@ -37,13 +38,39 @@ const mainReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SELECT_BOOK":
       return {
+        // prendiamo tutto quello che c'era nello stato in precedenza, prima di modificare alcune proprietà
         ...state,
         bookSelected: {
+          // prendiamo per sicurezza, tutto il contenuto anche di bookSelected (per non perdere niente)
           ...state.bookSelected,
+          // e andiamo a modificare la singola proprietà con il nuovo valore
           content: action.payload
         }
       };
 
+    case "ADD_TO_CART":
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          // content: state.cart.content.concat(action.payload) // questo metodo prende il valore di state.cart.content precedente,
+          // // ne concatena un nuovo e ritorna un NUOVO ARRAY!
+
+          content: [...state.cart.content, action.payload]
+        }
+      };
+
+    case "REMOVE_FROM_CART":
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          // content: state.cart.content.slice(0, action.payload).concat(state.cart.content.slice(action.payload + 1))
+          //   content: [...state.cart.content.slice(0, action.payload), ...state.cart.content.slice(action.payload + 1)]
+          content: state.cart.content.filter((_, i) => i !== action.payload)
+          // ❌ da non usare assolutamente metodi che mutano: es. splice!
+        }
+      };
     default:
       return state;
   }
